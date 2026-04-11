@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AWAD</title>
+</head>
+
+<body style="background:#111; color:#eee; font-family:sans-serif; padding:20px;">
+<style>
+button {
+    background: #2a2a2a;
+    color: white;
+    border: 1px solid #444;
+    padding: 5px 10px;
+    margin-left: 5px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #3a3a3a;
+}
+</style>
+    <h1>A World of Angels and Demons</h1>
+    <p><i>By Fei</i></p>
+
+    <hr>
+
+   <h2>Chapter 7</h2>
+   <p>this is a placeholder for the next chapter!</p>
+   <p>don't worry, it'll be updated soon!!</p>
+   <p></p>
+   <p></p> 
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+   <p></p>
+<div style="margin-top:20px;">
+    <a href="story5.html"><button>⬅️ Previous</button></a>
+    <a href="story8.html"><button>Next ➡️</button></a>
+</div>
+<script>
+function goNext() {
+    alert("uh-oh! no next chapter yet! come back later!");
+}
+</script>
+<h2>💬 Comments</h2>
+
+<input id="usernameInput" placeholder="your username..." />
+<br><br>
+
+<input id="commentInput" placeholder="write a comment..." />
+<br><br>
+
+<button id="postBtn">Post</button>
+
+<div id="commentList"></div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAbdszzZqJaGgyvzoGicIXNZe37iH6jbt4",
+  authDomain: "my-comments-backup.firebaseapp.com",
+  projectId: "my-comments-backup"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// SELECT ELEMENTS
+const postBtn = document.getElementById("postBtn");
+const usernameInput = document.getElementById("usernameInput");
+const commentInput = document.getElementById("commentInput");
+const commentList = document.getElementById("commentList");
+
+// POST COMMENT
+postBtn.onclick = async () => {
+    let text = commentInput.value.trim();
+    if (!text) return;
+
+    await addDoc(collection(db, "comments"), {
+        username: usernameInput.value || "Anonymous",
+        text: text,
+        time: new Date().toLocaleString()
+    });
+
+    commentInput.value = "";
+};
+
+// LOAD COMMENTS (REAL-TIME)
+onSnapshot(collection(db, "comments"), (snapshot) => {
+    commentList.innerHTML = "";
+
+    snapshot.forEach(doc => {
+        const c = doc.data();
+
+        let div = document.createElement("div");
+        div.innerHTML = `
+            <b>${c.username}</b><br>
+            ${c.text}<br>
+            <small>${c.time}</small>
+            <hr>
+        `;
+
+        commentList.appendChild(div);
+    });
+});
+</script>
+</body>
+</html>
